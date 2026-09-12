@@ -63,7 +63,7 @@ export default async function HomePage() {
       <HeroSection />
 
       {/* Category cards */}
-      <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24" aria-labelledby="categories-heading">
+      <section id="featured" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24" aria-labelledby="categories-heading">
         <h2 id="categories-heading" className="sr-only">Shop by Category</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           {categoryCards.map((cat) => (
