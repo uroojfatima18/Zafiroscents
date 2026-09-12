@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+
+/* ─── Design Tokens ────────────────────────────────────────────────────────── */
+@theme inline {
+  --color-noir:        #0E0E10;
+  --color-ivory:       #F5F1E8;
+  --color-surface:     #EDE6D8;
+  --color-surface-dark:#1B1A17;
+  --color-gold:        #C9A356;
+  --color-gold-light:  #E3C583;
+  --color-wine:        #7A1F2B;
+  --color-emerald:     #1F5C4E;
+
+  --font-display: var(--font-fraunces), serif;
+  --font-sans:    var(--font-inter), sans-serif;
+}
+
+
+/* ─── CSS Custom Properties (theme-aware) ──────────────────────────────────── */
+:root {
+  --bg:          #F5F1E8;
+  --bg-surface:  #EDE6D8;
+  --text:        #0E0E10;
+  --text-muted:  #6B6455;
+  --accent:      #C9A356;
+  --accent-hover:#b8913f;
+  --border:      rgba(14,14,16,0.12);
+  --shadow:      0 2px 20px rgba(14,14,16,0.08);
+}
+
+.dark {
+  --bg:          #0E0E10;
+  --bg-surface:  #1B1A17;
+  --text:        #F5F1E8;
+  --text-muted:  #9E9282;
+  --accent:      #E3C583;
+  --accent-hover:#d4b46e;
+  --border:      rgba(245,241,232,0.1);
+  --shadow:      0 2px 20px rgba(0,0,0,0.4);
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+/* ─── Typography ───────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Focus styles (WCAG AA) ───────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ─── Selection ────────────────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--accent);
+  color: var(--bg);
+}
+
+/* ─── Utility classes ──────────────────────────────────────────────────────── */
+.font-display  { font-family: var(--font-display); }
+.text-accent   { color: var(--accent); }
+.bg-theme      { background-color: var(--bg); }
+.bg-surface    { background-color: var(--bg-surface); }
+.text-theme    { color: var(--text); }
+.text-muted    { color: var(--text-muted); }
+.border-theme  { border-color: var(--border); }
+
+/* ─── Animations ───────────────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-fade-in {
+  animation: fade-in 0.5s ease both;
+}
+
+/* Skeleton shimmer */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--border) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* ─── Product card hover lift ──────────────────────────────────────────────── */
+.card-lift {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+}
+
+/* ─── Gold gradient text ───────────────────────────────────────────────────── */
+.text-gold-gradient {
+  background: linear-gradient(135deg, var(--accent), #d4b46e 50%, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
