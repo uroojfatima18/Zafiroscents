@@ -25,22 +25,22 @@ const categoryCards = [
     href: '/men',
     label: 'Men',
     tagline: 'Commanding. Precise. Unforgettable.',
-    accent: 'var(--color-gold)',
-    bg: 'rgba(201,163,86,0.08)',
+    accent: '#C36F43',
+    bg: '#FCEFE7',
   },
   {
     href: '/women',
     label: 'Women',
     tagline: 'Sensuous. Complex. Enduring.',
-    accent: '#7A1F2B',
-    bg: 'rgba(122,31,43,0.08)',
+    accent: '#B55636',
+    bg: '#FDF3EC',
   },
   {
     href: '/unisex',
     label: 'Unisex',
     tagline: 'Beyond convention.',
-    accent: '#1F5C4E',
-    bg: 'rgba(31,92,78,0.08)',
+    accent: '#965335',
+    bg: '#F9EDE3',
   },
 ]
 
@@ -132,8 +132,8 @@ export default async function HomePage() {
           className="relative py-16 px-8 sm:px-16 flex flex-col sm:flex-row items-center justify-between gap-8"
           style={{
             background:
-              'linear-gradient(135deg, rgba(201,163,86,0.12) 0%, rgba(201,163,86,0.04) 100%)',
-            border: '1px solid rgba(201,163,86,0.2)',
+              'linear-gradient(135deg, #FDEFE5 0%, #F5E3D5 100%)',
+            border: '1px solid rgba(195,111,67,0.2)',
           }}
         >
           <div>
@@ -150,7 +150,7 @@ export default async function HomePage() {
           <Link
             href="/shop?maxPrice=2000"
             id="promo-shop-link"
-            className="flex-shrink-0 inline-flex items-center gap-2 px-8 py-4 text-sm font-medium uppercase tracking-widest bg-[var(--accent)] text-[var(--bg)] hover:bg-[var(--accent-hover)] transition-colors duration-200 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2"
+            className="flex-shrink-0 inline-flex items-center gap-2 px-8 py-4 text-sm font-medium uppercase tracking-widest bg-[#2D1F17] text-[#FDFBF7] hover:bg-[#C36F43] transition-colors duration-200 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2"
           >
             Discover
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

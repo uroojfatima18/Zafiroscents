@@ -7,10 +7,11 @@ import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { useCartStore } from '@/lib/store/cart'
 
 const navLinks = [
+  { href: '/shop', label: 'Shop' },
+  { href: '/shop?sort=newest', label: 'New Release' },
   { href: '/men', label: 'Men' },
   { href: '/women', label: 'Women' },
   { href: '/unisex', label: 'Unisex' },
-  { href: '/shop', label: 'Shop All' },
 ]
 
 export function Header() {
@@ -20,7 +21,7 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 20)
+    const handler = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
@@ -32,28 +33,28 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[var(--bg)]/95 backdrop-blur-md border-b border-[var(--border)]'
-          : 'bg-transparent'
+          ? 'bg-[#FAF2EB]/95 backdrop-blur-md border-b border-[var(--border)] shadow-sm'
+          : 'bg-[#FAF2EB]/80 backdrop-blur-md border-b border-[var(--border)]'
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-sm" aria-label="Zafiro Scents — Home">
-            <span className="font-display text-xl md:text-2xl text-[var(--accent)] tracking-wider">
-              Zafiro Scents
+            <span className="font-display text-xl md:text-2xl text-[var(--text)] tracking-wider">
+              Fragsënce <span className="text-[var(--accent)] text-xs font-sans tracking-normal">| Zafiro</span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
+          <nav className="hidden md:flex items-center gap-7" aria-label="Main navigation">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-sans tracking-wide transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-sm px-1 ${
+                className={`text-xs uppercase tracking-widest font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-sm px-1 ${
                   pathname.startsWith(link.href)
-                    ? 'text-[var(--accent)]'
+                    ? 'text-[var(--accent)] font-semibold'
                     : 'text-[var(--text-muted)] hover:text-[var(--text)]'
                 }`}
               >

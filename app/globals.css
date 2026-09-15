@@ -1,43 +1,54 @@
 @import "tailwindcss";
 
 
-/* ─── Design Tokens (Midnight Petroleum Teal & Antique Bone Ivory) ────────── */
+/* ─── Design Tokens (Haute Parfumerie Peach, Beige & White Palette) ────────── */
 @theme inline {
-  --color-noir:        #07151B;
-  --color-ivory:       #EDE6D6;
-  --color-surface:     #0E232B;
-  --color-surface-dark:#051014;
-  --color-gold:        #C89B53;
-  --color-gold-light:  #E5C287;
-  --color-wine:        #7A1F2B;
-  --color-emerald:     #144A4F;
+  --color-noir:        #2D1F17;
+  --color-ivory:       #FDFBF7;
+  --color-beige:       #F5EBE1;
+  --color-beige-dark:  #E8D7C7;
+  --color-peach:       #E29A73;
+  --color-peach-light: #FCEFE7;
+  --color-peach-deep:  #965335;
+  --color-surface:     #FFFFFF;
+  --color-surface-dark:#EDE0D2;
+  --color-gold:        #C36F43;
+  --color-gold-light:  #E5A376;
+  --color-wine:        #6D2B1C;
+  --color-emerald:     #2B5449;
 
   --font-display: var(--font-fraunces), serif;
   --font-sans:    var(--font-inter), sans-serif;
 }
 
 
-/* ─── CSS Custom Properties (Midnight Teal & Ivory Palette) ────────────────── */
+/* ─── CSS Custom Properties (Peach, Beige & White Palette) ────────────────── */
 :root {
-  --bg:          #07151B;
-  --bg-surface:  #0E232B;
-  --text:        #EDE6D6;
-  --text-muted:  #93A5AC;
-  --accent:      #C89B53;
-  --accent-hover:#dfb36b;
-  --border:      rgba(237,230,214,0.12);
-  --shadow:      0 4px 24px rgba(3,8,11,0.6);
+  --bg:          #F5EBE1;
+  --bg-surface:  #FFFFFF;
+  --bg-subtle:   #EDE0D2;
+  --bg-peach:    #E29A73;
+  --bg-peach-light:#FBF3EC;
+  --text:        #2D1F17;
+  --text-muted:  #7D6556;
+  --accent:      #C36F43;
+  --accent-hover:#A8572D;
+  --border:      rgba(150, 83, 53, 0.14);
+  --shadow:      0 12px 36px rgba(120, 60, 30, 0.08);
 }
 
 .dark {
-  --bg:          #07151B;
-  --bg-surface:  #0E232B;
-  --text:        #EDE6D6;
-  --text-muted:  #93A5AC;
-  --accent:      #C89B53;
-  --accent-hover:#dfb36b;
-  --border:      rgba(237,230,214,0.12);
-  --shadow:      0 4px 24px rgba(3,8,11,0.6);
+  --bg:          #1F1611;
+  --bg-surface:  #2C1F18;
+  --bg-subtle:   #392921;
+  --bg-peach:    #C36F43;
+  --bg-peach-light:#2A1C15;
+  --text:        #FAF3EC;
+  --text-muted:  #B59E90;
+  --accent:      #E29A73;
+  --accent-hover:#F0B18E;
+  --border:      rgba(242, 177, 142, 0.16);
+  --shadow:      0 12px 40px rgba(0, 0, 0, 0.6);
 }
 
 /* ─── Base ─────────────────────────────────────────────────────────────────── */
@@ -79,9 +90,9 @@ h1, h2, h3, h4, h5, h6 {
   width: 6px;
   height: 6px;
 }
-::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: rgba(60, 48, 36, 0.2);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -90,8 +101,8 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ─── Selection ────────────────────────────────────────────────────────────── */
 ::selection {
-  background-color: var(--accent);
-  color: var(--bg);
+  background-color: #EBD8B8;
+  color: #1C1917;
 }
 
 /* ─── Utility classes ──────────────────────────────────────────────────────── */

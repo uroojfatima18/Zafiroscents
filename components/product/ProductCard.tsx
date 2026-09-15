@@ -98,7 +98,7 @@ export function ProductCard({ id, slug, name, category, images, featured, varian
               onClick={handleAddToCart}
               disabled={!inStock}
               aria-label={`Add ${name} to cart`}
-              className="w-full py-2.5 text-xs font-medium uppercase tracking-widest bg-[var(--accent)] text-[var(--bg)] hover:bg-[var(--accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 rounded-sm"
+              className="w-full py-2.5 text-xs font-medium uppercase tracking-widest bg-[var(--accent)] text-white hover:bg-[var(--accent-hover)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 rounded-sm shadow-sm"
             >
               {added ? 'Added' : inStock ? 'Add to cart' : 'Sold out'}
             </button>
