@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -24,6 +25,7 @@ type CheckoutFormValues = z.infer<typeof checkoutSchema>
 
 export default function CheckoutPage() {
   const router = useRouter()
+  const { data: session } = useSession()
   const { items, totalPrice, clearCart } = useCartStore()
   const total = totalPrice()
   const [error, setError] = useState<string | null>(null)
@@ -31,10 +33,28 @@ export default function CheckoutPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
   })
+
+  useEffect(() => {
+    if (session?.user) {
+      if (session.user.name) setValue('shippingName', session.user.name)
+      fetch('/api/user/profile')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.user) {
+            if (data.user.name) setValue('shippingName', data.user.name)
+            if (data.user.phone) setValue('shippingPhone', data.user.phone)
+            if (data.user.address) setValue('shippingAddress', data.user.address)
+            if (data.user.city) setValue('shippingCity', data.user.city)
+          }
+        })
+        .catch(() => {})
+    }
+  }, [session, setValue])
 
   if (items.length === 0) {
     return (
@@ -54,6 +74,7 @@ export default function CheckoutPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...data,
+          userId: session?.user?.id,
           items: items.map((i) => ({
             productVariantId: i.productVariantId,
             quantity: i.quantity,
@@ -79,9 +100,34 @@ export default function CheckoutPage() {
   return (
     <div className="pt-20">
       <div className="max-w-5xl mx-auto px-5 sm:px-8 lg:px-12 py-16">
-        <h1 className="font-display text-4xl sm:text-5xl text-[var(--text)] mb-12">
+        <h1 className="font-display text-4xl sm:text-5xl text-[var(--text)] mb-8">
           Checkout
         </h1>
+
+        {!session && (
+          <div className="mb-8 p-4 rounded-xl bg-[var(--accent)]/10 border border-[var(--accent)]/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs sm:text-sm">
+            <span className="text-[var(--text)]">
+              Already have a Zafiro Scents client account? Sign in to checkout faster.
+            </span>
+            <Link
+              href="/login?callbackUrl=/checkout"
+              className="text-[var(--accent)] font-semibold hover:underline flex-shrink-0"
+            >
+              Sign In to Account →
+            </Link>
+          </div>
+        )}
+
+        {session && (
+          <div className="mb-8 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-xs sm:text-sm text-[var(--text)] flex items-center justify-between">
+            <span>
+              Ordering as <strong>{session.user?.name || session.user?.email}</strong>. This order will be linked to your account.
+            </span>
+            <Link href="/profile" className="text-[var(--accent)] font-medium hover:underline text-xs">
+              Manage Profile
+            </Link>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { auth } from '@/auth'
 import { createOrder } from '@backend/services/order.service'
 import { createOrderSchema } from '@backend/validations/order'
 
@@ -19,6 +20,11 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const session = await auth()
+    if (session?.user?.id && !parsed.data.userId) {
+      parsed.data.userId = session.user.id
+    }
+
     const order = await createOrder(parsed.data)
     return NextResponse.json({ order }, { status: 201 })
   } catch (error: unknown) {

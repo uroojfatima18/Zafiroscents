@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { useSession, signOut } from 'next-auth/react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { useCartStore } from '@/lib/store/cart'
 
@@ -28,6 +29,8 @@ export function Header() {
 
   // Close mobile menu on route change
   useEffect(() => setMenuOpen(false), [pathname])
+
+  const { data: session } = useSession()
 
   return (
     <header
@@ -66,6 +69,32 @@ export function Header() {
           {/* Actions */}
           <div className="flex items-center gap-3">
             <ThemeToggle />
+
+            {/* User Account / Profile link */}
+            {session ? (
+              <Link
+                href="/profile"
+                aria-label="My Account and Orders"
+                className="relative w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border)] hover:border-[var(--accent)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] group bg-[var(--accent)]/10 text-[var(--accent)] font-bold text-xs uppercase"
+                title={`Logged in as ${session.user?.name || session.user?.email}`}
+              >
+                {session.user?.name ? session.user.name.charAt(0) : 'U'}
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                aria-label="Sign In"
+                className="w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border)] hover:border-[var(--accent)] text-[var(--text)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+                title="Sign In / Register"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </Link>
+            )}
+
+            {/* Cart link */}
             <Link
               href="/cart"
               aria-label={`Cart — ${totalItems} item${totalItems !== 1 ? 's' : ''}`}
@@ -125,6 +154,32 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
+
+            <div className="pt-2 border-t border-[var(--border)]/60 mt-2">
+              {session ? (
+                <>
+                  <Link
+                    href="/profile"
+                    className="block px-3 py-2.5 text-sm font-medium text-[var(--accent)]"
+                  >
+                    My Account & Orders ({session.user?.name || 'Client'})
+                  </Link>
+                  <button
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    className="w-full text-left px-3 py-2 text-xs uppercase tracking-wider text-red-600"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="block px-3 py-2.5 text-sm font-medium text-[var(--text)] hover:text-[var(--accent)]"
+                >
+                  Sign In / Register
+                </Link>
+              )}
+            </div>
           </nav>
         )}
       </div>

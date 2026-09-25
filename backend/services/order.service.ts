@@ -39,6 +39,7 @@ export async function createOrder(data: CreateOrderInput) {
           const newOrder = await tx.order.create({
             data: {
               orderNumber,
+              userId: data.userId || null,
               total,
               shippingName,
               shippingPhone,

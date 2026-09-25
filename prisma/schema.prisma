@@ -50,10 +50,26 @@ model ProductVariant {
   @@unique([productId, sizeMl])
 }
 
+model User {
+  id              String      @id @default(cuid())
+  name            String
+  email           String      @unique
+  password        String
+  phone           String?
+  address         String?
+  city            String?
+  role            String      @default("customer")
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  orders          Order[]
+}
+
 model Order {
   id              String      @id @default(cuid())
   orderNumber     String      @unique
-  userId          String?     // reserved for future auth — not used yet
+  userId          String?
+  user            User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
   total           Int         // in PKR
   status          OrderStatus @default(pending)
   paymentMethod   String      @default("cod")

@@ -14,6 +14,7 @@ export const createOrderSchema = z.object({
     .regex(/^(\+92|0)[0-9]{10}$/, 'Enter a valid Pakistani phone number'),
   shippingAddress: z.string().min(5, 'Address is required').max(300),
   shippingCity: z.string().min(2, 'City is required').max(100),
+  userId: z.string().optional(),
 })
 
 export type CreateOrderInput = z.infer<typeof createOrderSchema>
