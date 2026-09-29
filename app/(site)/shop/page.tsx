@@ -39,7 +39,7 @@ export default async function ShopPage({ searchParams }: PageProps) {
   return (
     <div className="pt-20">
       {/* Page header */}
-      <div className="py-16 px-5 sm:px-8 lg:px-12 text-center border-b border-[var(--border)]">
+      <div className="py-16 px-5 sm:px-8 lg:px-12 text-center border-b border-[var(--border)] animate-fade-up">
         <h1 className="font-display text-5xl sm:text-6xl text-[var(--text)]">
           Shop All
         </h1>

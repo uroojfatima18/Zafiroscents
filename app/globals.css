@@ -16,6 +16,23 @@
   --color-gold-light:  #E5A376;
   --color-wine:        #6D2B1C;
   --color-emerald:     #2B5449;
+  
+  --color-page-bg: #F3E4D8;
+  --color-hero-bg: #D98B67;
+  --color-watermark: #9C4527;
+  --color-ground: #B8623F;
+  --color-ground-line: #E9B08F;
+  --color-ink: #231008;
+  --color-ink-soft: #3A1B10;
+  --color-ink-italic: #4A2415;
+  --color-nav-text: #6B4636;
+  --color-brand-accent: #B5532F;
+  --color-rail-bg: #1E120D;
+  --color-rail-card: #2C1C15;
+  --color-rail-card-active: #3A2A22;
+  --color-rail-text: #FBEFE6;
+  --color-rail-muted: #C9A796;
+  --color-on-ink: #FBEFE6;
 
   --font-display: var(--font-fraunces), serif;
   --font-sans:    var(--font-inter), sans-serif;
@@ -167,3 +184,63 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ─── HyperFrames CSS Animations Patterns ──────────────────────────────────── */
+
+/* Pulse Ring Animation (Finite repetition recommended) */
+@keyframes pulse-ring {
+  from {
+    opacity: 0;
+    transform: scale(0.82);
+  }
+  35% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.18);
+  }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1500ms cubic-bezier(0.2, 0, 0, 1) 4 both;
+}
+
+/* Staggered Pop Animation (Using CSS Custom Properties --i) */
+@keyframes item-pop {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.75);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.stagger-item {
+  animation: item-pop 900ms ease-out both;
+  animation-delay: calc(var(--i) * 120ms);
+}
+
+/* Infinite Marquee Animation for Hero Dock */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+

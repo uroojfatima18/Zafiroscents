@@ -66,13 +66,13 @@ export default async function HomePage() {
       <section id="featured" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24" aria-labelledby="categories-heading">
         <h2 id="categories-heading" className="sr-only">Shop by Category</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          {categoryCards.map((cat) => (
+          {categoryCards.map((cat, i) => (
             <Link
               key={cat.href}
               href={cat.href}
               id={`category-${cat.label.toLowerCase()}`}
-              className="group relative aspect-[3/4] sm:aspect-[2/3] flex flex-col justify-end p-8 rounded-sm overflow-hidden transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] card-lift"
-              style={{ background: cat.bg }}
+              className="stagger-item group relative aspect-[3/4] sm:aspect-[2/3] flex flex-col justify-end p-8 rounded-sm overflow-hidden transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] card-lift"
+              style={{ background: cat.bg, '--i': i } as React.CSSProperties}
               aria-label={`Shop ${cat.label} fragrances`}
             >
               <div
@@ -127,7 +127,7 @@ export default async function HomePage() {
       </section>
 
       {/* Under Rs. 2,000 banner */}
-      <section className="mx-5 sm:mx-8 lg:mx-12 mb-24 rounded-sm overflow-hidden" aria-labelledby="promo-heading">
+      <section className="mx-5 sm:mx-8 lg:mx-12 mb-24 rounded-sm overflow-hidden animate-fade-up" aria-labelledby="promo-heading">
         <div
           className="relative py-16 px-8 sm:px-16 flex flex-col sm:flex-row items-center justify-between gap-8"
           style={{

@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/profile'
@@ -57,6 +58,15 @@ export default function LoginPage() {
         </div>
 
         <div className="bg-[#FAF2EB]/70 border border-[var(--border)] rounded-2xl p-6 sm:p-8 shadow-sm backdrop-blur-sm">
+          {searchParams.get('registered') === 'true' && !error && (
+            <div className="mb-6 p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-700 dark:text-green-400 text-xs sm:text-sm flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              <span>Account created successfully! Please sign in with your email and password.</span>
+            </div>
+          )}
+
           {error && (
             <div className="mb-6 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 text-xs sm:text-sm flex items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -67,6 +77,20 @@ export default function LoginPage() {
               <span>{error}</span>
             </div>
           )}
+
+          {/* Social Sign-In */}
+          <div className="mb-6">
+            <GoogleSignInButton callbackUrl={callbackUrl} text="Continue with Google" />
+
+            <div className="relative my-6 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-[var(--border)]" />
+              </div>
+              <span className="relative px-3 bg-[#FAF2EB] dark:bg-[#1A1310] text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-medium">
+                Or with email
+              </span>
+            </div>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -156,5 +180,19 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-[80vh] flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <LoginForm />
+    </Suspense>
   )
 }

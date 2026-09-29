@@ -44,8 +44,10 @@ export function ProductGrid({ products, loading, emptyMessage = 'No fragrances f
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-5 gap-y-10">
-      {products.map((product) => (
-        <ProductCard key={product.id} {...product} />
+      {products.map((product, i) => (
+        <div key={product.id} className="stagger-item" style={{ '--i': i } as React.CSSProperties}>
+          <ProductCard {...product} />
+        </div>
       ))}
     </div>
   )

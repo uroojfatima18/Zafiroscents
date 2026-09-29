@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSession, signOut } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -44,11 +44,14 @@ interface UserProfile {
   orders: Order[]
 }
 
-export default function ProfilePage() {
+function ProfileContent() {
   const { data: session, status } = useSession()
   const router = useRouter()
+  const searchParams = useSearchParams()
 
-  const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'security'>('profile')
+  const tabParam = searchParams.get('tab')
+  const initialTab = (tabParam === 'orders' || tabParam === 'security') ? tabParam : 'profile'
+  const [activeTab, setActiveTab] = useState<'profile' | 'orders' | 'security'>(initialTab)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -74,6 +77,13 @@ export default function ProfilePage() {
       fetchProfile()
     }
   }, [status, router])
+
+  useEffect(() => {
+    const t = searchParams.get('tab')
+    if (t === 'orders' || t === 'security' || t === 'profile') {
+      setActiveTab(t)
+    }
+  }, [searchParams])
 
   const fetchProfile = async () => {
     try {
@@ -558,5 +568,24 @@ export default function ProfilePage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function ProfilePage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-10 h-10 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" />
+            <p className="text-xs uppercase tracking-widest text-[var(--text-muted)] font-medium">
+              Loading your profile...
+            </p>
+          </div>
+        </div>
+      }
+    >
+      <ProfileContent />
+    </Suspense>
   )
 }

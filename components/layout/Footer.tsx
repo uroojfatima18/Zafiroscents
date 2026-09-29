@@ -16,10 +16,12 @@ const footerNav = [
     ],
   },
   {
-    title: 'Information',
+    title: 'Client Service',
     links: [
       { href: '/cart', label: 'Cart' },
       { href: '/checkout', label: 'Checkout' },
+      { href: '/profile', label: 'Client Account & Orders' },
+      { href: '/login', label: 'Sign In / Register' },
     ],
   },
 ]

@@ -32,7 +32,7 @@ export default async function MenPage({ searchParams }: PageProps) {
     <div className="pt-20">
       {/* Page header */}
       <div
-        className="py-20 px-5 sm:px-8 lg:px-12 text-center"
+        className="py-20 px-5 sm:px-8 lg:px-12 text-center animate-fade-up"
         style={{ background: 'linear-gradient(180deg, rgba(201,163,86,0.06) 0%, transparent 100%)' }}
       >
         <p className="text-xs uppercase tracking-[0.3em] text-[var(--accent)] mb-3">

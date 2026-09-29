@@ -32,7 +32,7 @@ export default async function UnisexPage({ searchParams }: PageProps) {
     <div className="pt-20">
       {/* Page header */}
       <div
-        className="py-20 px-5 sm:px-8 lg:px-12 text-center"
+        className="py-20 px-5 sm:px-8 lg:px-12 text-center animate-fade-up"
         style={{ background: 'linear-gradient(180deg, rgba(31,92,78,0.06) 0%, transparent 100%)' }}
       >
         <p className="text-xs uppercase tracking-[0.3em] mb-3" style={{ color: '#1F5C4E' }}>

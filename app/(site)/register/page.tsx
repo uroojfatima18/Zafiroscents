@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
+import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton'
 
-export default function RegisterPage() {
+function RegisterForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') || '/profile'
@@ -115,6 +116,20 @@ export default function RegisterPage() {
               <span>{error}</span>
             </div>
           )}
+
+          {/* Social Sign-Up */}
+          <div className="mb-6">
+            <GoogleSignInButton callbackUrl={callbackUrl} text="Sign up with Google" />
+
+            <div className="relative my-6 flex items-center justify-center">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-[var(--border)]" />
+              </div>
+              <span className="relative px-3 bg-[#FAF2EB] dark:bg-[#1A1310] text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-medium">
+                Or with details
+              </span>
+            </div>
+          </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -287,5 +302,19 @@ export default function RegisterPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-[85vh] flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-[var(--accent)] border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <RegisterForm />
+    </Suspense>
   )
 }

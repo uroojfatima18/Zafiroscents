@@ -79,25 +79,29 @@ export async function PUT(req: Request) {
 
     // If changing password
     if (newPassword) {
-      if (!currentPassword) {
-        return NextResponse.json(
-          { error: 'Current password is required to set a new password' },
-          { status: 400 }
-        )
-      }
-      const isMatch = await bcrypt.compare(currentPassword, user.password)
-      if (!isMatch) {
-        return NextResponse.json(
-          { error: 'Current password is incorrect' },
-          { status: 400 }
-        )
-      }
       if (newPassword.length < 6) {
         return NextResponse.json(
           { error: 'New password must be at least 6 characters long' },
           { status: 400 }
         )
       }
+
+      if (user.password) {
+        if (!currentPassword) {
+          return NextResponse.json(
+            { error: 'Current password is required to set a new password' },
+            { status: 400 }
+          )
+        }
+        const isMatch = await bcrypt.compare(currentPassword, user.password)
+        if (!isMatch) {
+          return NextResponse.json(
+            { error: 'Current password is incorrect' },
+            { status: 400 }
+          )
+        }
+      }
+
       updateData.password = await bcrypt.hash(newPassword, 10)
     }
 

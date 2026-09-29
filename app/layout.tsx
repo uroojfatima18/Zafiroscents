@@ -55,7 +55,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={`${fraunces.variable} ${inter.variable}`}>
       <body>
         <AuthProvider>
-          <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" enableSystem={false}>
             {children}
           </ThemeProvider>
         </AuthProvider>

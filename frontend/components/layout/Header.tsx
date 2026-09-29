@@ -3,8 +3,10 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { useSession, signOut } from 'next-auth/react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { useCartStore } from '@/lib/store/cart'
+import { UserDropdown } from '@/components/auth/UserDropdown'
 
 const navLinks = [
   { href: '/shop', label: 'Shop' },
@@ -29,20 +31,22 @@ export function Header() {
   // Close mobile menu on route change
   useEffect(() => setMenuOpen(false), [pathname])
 
+  const { data: session } = useSession()
+
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 animate-fade-in ${
         scrolled
-          ? 'bg-[#FAF2EB]/95 backdrop-blur-md border-b border-[var(--border)] shadow-sm'
-          : 'bg-[#FAF2EB]/80 backdrop-blur-md border-b border-[var(--border)]'
+          ? 'bg-page-bg/95 backdrop-blur-md border-b border-[var(--border)] shadow-sm'
+          : 'bg-page-bg border-b border-[var(--border)]'
       }`}
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
         <div className="flex items-center justify-between h-16 md:h-18">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-sm" aria-label="Zafiro Scents — Home">
-            <span className="font-display text-xl md:text-2xl text-[var(--text)] tracking-wider">
-              Fragsënce <span className="text-[var(--accent)] text-xs font-sans tracking-normal">| Zafiro</span>
+            <span className="font-display text-xl md:text-2xl text-[var(--text)] tracking-wider uppercase">
+              ZAFIRO <span className="text-[var(--accent)] text-xs font-sans tracking-normal">| SCENTS</span>
             </span>
           </Link>
 
@@ -52,10 +56,10 @@ export function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-xs uppercase tracking-widest font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-sm px-1 ${
+                className={`text-[11px] uppercase tracking-[0.15em] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent rounded-sm px-1 ${
                   pathname.startsWith(link.href)
-                    ? 'text-[var(--accent)] font-semibold'
-                    : 'text-[var(--text-muted)] hover:text-[var(--text)]'
+                    ? 'text-brand-accent font-semibold'
+                    : 'text-nav-text hover:text-ink'
                 }`}
               >
                 {link.label}
@@ -65,13 +69,30 @@ export function Header() {
 
           {/* Actions */}
           <div className="flex items-center gap-3">
-            <ThemeToggle />
+            {/* User Account / Profile link */}
+            {session?.user ? (
+              <UserDropdown user={session.user} />
+            ) : (
+              <Link
+                href="/login"
+                aria-label="Sign In"
+                className="w-[28px] h-[28px] flex items-center justify-center rounded-full border border-[#D9B7A3] hover:border-brand-accent text-ink transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
+                title="Sign In / Register"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </Link>
+            )}
+
+            {/* Cart link */}
             <Link
               href="/cart"
               aria-label={`Cart — ${totalItems} item${totalItems !== 1 ? 's' : ''}`}
-              className="relative w-9 h-9 flex items-center justify-center rounded-full border border-[var(--border)] hover:border-[var(--accent)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+              className="relative w-[28px] h-[28px] flex items-center justify-center rounded-full border border-[#D9B7A3] hover:border-brand-accent text-ink transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 0 1-8 0" />
@@ -125,6 +146,32 @@ export function Header() {
                 {link.label}
               </Link>
             ))}
+
+            <div className="pt-2 border-t border-[var(--border)]/60 mt-2">
+              {session ? (
+                <>
+                  <Link
+                    href="/profile"
+                    className="block px-3 py-2.5 text-sm font-medium text-[var(--accent)]"
+                  >
+                    My Account & Orders ({session.user?.name || 'Client'})
+                  </Link>
+                  <button
+                    onClick={() => signOut({ callbackUrl: '/' })}
+                    className="w-full text-left px-3 py-2 text-xs uppercase tracking-wider text-red-600"
+                  >
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <Link
+                  href="/login"
+                  className="block px-3 py-2.5 text-sm font-medium text-[var(--text)] hover:text-[var(--accent)]"
+                >
+                  Sign In / Register
+                </Link>
+              )}
+            </div>
           </nav>
         )}
       </div>
