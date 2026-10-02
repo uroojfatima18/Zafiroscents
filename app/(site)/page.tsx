@@ -20,29 +20,7 @@ async function getNewArrivals() {
   return data.products
 }
 
-const categoryCards = [
-  {
-    href: '/men',
-    label: 'Men',
-    tagline: 'Commanding. Precise. Unforgettable.',
-    accent: '#C36F43',
-    bg: '#FCEFE7',
-  },
-  {
-    href: '/women',
-    label: 'Women',
-    tagline: 'Sensuous. Complex. Enduring.',
-    accent: '#B55636',
-    bg: '#FDF3EC',
-  },
-  {
-    href: '/unisex',
-    label: 'Unisex',
-    tagline: 'Beyond convention.',
-    accent: '#965335',
-    bg: '#F9EDE3',
-  },
-]
+
 
 export default async function HomePage() {
   const [featured, newArrivals] = await Promise.all([
@@ -62,48 +40,7 @@ export default async function HomePage() {
 
       <HeroSection />
 
-      {/* Category cards */}
-      <section id="featured" className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 py-24" aria-labelledby="categories-heading">
-        <h2 id="categories-heading" className="sr-only">Shop by Category</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          {categoryCards.map((cat, i) => (
-            <Link
-              key={cat.href}
-              href={cat.href}
-              id={`category-${cat.label.toLowerCase()}`}
-              className="stagger-item group relative aspect-[3/4] sm:aspect-[2/3] flex flex-col justify-end p-8 rounded-sm overflow-hidden transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] card-lift"
-              style={{ background: cat.bg, '--i': i } as React.CSSProperties}
-              aria-label={`Shop ${cat.label} fragrances`}
-            >
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background: `linear-gradient(135deg, ${cat.bg} 0%, transparent 100%)`,
-                }}
-                aria-hidden="true"
-              />
-              {/* Bottle silhouette */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 group-hover:opacity-30 transition-opacity duration-300" aria-hidden="true">
-                <MiniBottle accent={cat.accent} />
-              </div>
-              <div className="relative z-10">
-                <p className="text-xs uppercase tracking-[0.3em] mb-2" style={{ color: cat.accent }}>
-                  {cat.label}
-                </p>
-                <p className="font-display text-2xl text-[var(--text)] leading-snug">
-                  {cat.tagline}
-                </p>
-                <div className="mt-4 flex items-center gap-2 text-xs uppercase tracking-widest text-[var(--text-muted)] group-hover:text-[var(--text)] transition-colors duration-200">
-                  <span>Explore</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="translate-x-0 group-hover:translate-x-1 transition-transform duration-200">
-                    <path d="M5 12h14M12 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+
 
       {/* New Arrivals */}
       <section className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 pb-24" aria-labelledby="new-arrivals-heading">

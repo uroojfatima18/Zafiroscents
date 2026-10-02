@@ -20,14 +20,14 @@ export function HeroSection() {
   return (
     <section className="w-full flex flex-col items-center justify-center pt-24 px-4 sm:px-6 lg:px-8 bg-page-bg pb-12">
       {/* Hero Container */}
-      <div className="w-full max-w-[1200px] mx-auto rounded-t-2xl relative overflow-hidden bg-hero-bg aspect-[4/3] sm:aspect-[16/10] md:aspect-[16/9] lg:aspect-[21/10]">
+      <div className="w-full max-w-[1200px] mx-auto rounded-t-2xl relative overflow-hidden bg-hero-bg min-h-[550px] sm:min-h-0 sm:aspect-[16/10] md:aspect-[16/9] lg:aspect-[21/10]">
         {/* Layer 0: FULL BACKGROUND IMAGE */}
         <div className="absolute inset-0 w-full h-full z-0 overflow-hidden">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
-            className="w-full h-full"
+            className="w-full h-full relative"
           >
             <Image
               src="/hero/zafiro-peach-duo-hero.jpg"
@@ -35,34 +35,35 @@ export function HeroSection() {
               fill
               priority
               sizes="(max-width: 1280px) 100vw, 1280px"
-              className="object-cover object-right"
+              className="object-cover object-center sm:object-right"
             />
           </motion.div>
           {/* Subtle vignette/gradient to ensure left text remains readable */}
-          <div className="absolute inset-y-0 left-0 w-full sm:w-2/3 lg:w-1/2 bg-gradient-to-r from-page-bg/40 to-transparent mix-blend-multiply" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#FDF3EC] via-[#FDF3EC]/80 to-transparent sm:hidden z-10" />
+          <div className="hidden sm:block absolute inset-y-0 left-0 w-2/3 lg:w-1/2 bg-gradient-to-r from-page-bg/40 to-transparent mix-blend-multiply z-10" />
         </div>
 
         {/* Layer 4: TEXT BLOCK */}
-        <div className="absolute bottom-[16%] left-[5%] w-[90%] md:w-[40%] lg:w-[35%] pb-6 z-40 flex flex-col justify-end h-full pr-4">
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-10 sm:inset-auto sm:bottom-[16%] sm:left-[5%] sm:px-0 sm:pb-6 sm:w-[90%] md:w-[40%] lg:w-[35%] z-40 flex flex-col justify-end">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="flex flex-col gap-4"
+            className="flex flex-col gap-4 items-center text-center sm:items-start sm:text-left"
           >
             <p className="text-[11px] tracking-[0.22em] text-ink-soft uppercase font-semibold">
               Limited Batch Atelier
             </p>
             
             <h1 className="font-display text-ink leading-[1.1] text-balance" style={{ fontSize: 'clamp(1.75rem, 3.2cqw + 0.5rem, 3rem)' }}>
-              SCENTS <br/>
+              SCENTS <br className="hidden sm:block"/>
               <span className="italic font-light text-ink-italic">ZAFIRO</span>
             </h1>
 
-            <div className="flex flex-wrap items-center gap-4 mt-2">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center gap-4 mt-2 w-full sm:w-auto">
               <Link 
                 href="/shop"
-                className="bg-ink hover:bg-ink-soft text-on-ink px-[18px] py-[12px] rounded-[6px] text-[11px] tracking-[0.14em] uppercase font-semibold transition-all hover:-translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent flex items-center gap-2"
+                className="w-full sm:w-auto justify-center bg-ink hover:bg-ink-soft text-on-ink px-[18px] py-[12px] rounded-[6px] text-[11px] tracking-[0.14em] uppercase font-semibold transition-all hover:-translate-y-[1px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent flex items-center gap-2"
               >
                 Explore Collection
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
